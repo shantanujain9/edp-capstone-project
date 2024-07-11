@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
-import { CartContext } from '../contexts/CartContext';
+import { useParams } from 'react-router-dom';
+import { CartContext } from '../contexts/CartContext';  // Adjust the path if needed
 
-const ProductDetail = ({ match }) => {
-  const { id } = match.params;
-  const [product, setProduct] = useState({});
+const ProductDetail = () => {
+  const { id } = useParams();
+  const [product, setProduct] = useState(null);
   const { addToCart } = useContext(CartContext);
 
   useEffect(() => {
@@ -16,17 +17,17 @@ const ProductDetail = ({ match }) => {
     fetchProduct();
   }, [id]);
 
+  if (!product) return <div>Loading...</div>;
+
   return (
     <div className="container">
-      <div className="card">
-        <img src={product.image} className="card-img-top" alt={product.name} />
-        <div className="card-body">
-          <h5 className="card-title">{product.name}</h5>
-          <p className="card-text">{product.description}</p>
-          <p className="card-text">${product.price}</p>
-          <button onClick={() => addToCart(product)} className="btn btn-primary">Add to Cart</button>
-        </div>
-      </div>
+      <h2>{product.name}</h2>
+      <img src={product.image} alt={product.name} />
+      <p>{product.description}</p>
+      <p>${product.price}</p>
+      <button onClick={() => addToCart(product)} className="btn btn-primary">
+        Add to Cart
+      </button>
     </div>
   );
 };
