@@ -1,0 +1,28 @@
+
+.container {
+    padding:20px;
+  }
+  
+  .search-box{
+    margin-bottom:20px;
+  }
+  
+  .categories ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .categories li {
+    margin: 5px 0;
+  }
+  
+  .featured-products .product-list {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .featured-products .product-item {
+    margin: 10px;
+    border: 1px solid #ccc;
+    padding: 10px
+  }
