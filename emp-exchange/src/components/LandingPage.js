@@ -40,7 +40,7 @@ const LandingPage = () => {
                         ))}
                     </ul>
                 </div>
-                <div classNmae="featured-products">
+                <div className="featured-products">
                     <h2>Featured Products</h2>
                     <div className ="product-list">
                         {featuredProducts.map((product) =>(
