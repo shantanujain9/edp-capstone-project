@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 const LandingPage = () => {
   const [categories, setCategories] = useState([]);
   const [featuredProducts, setFeaturedProducts] = useState([]);
+  const [search, setSearch] = useState('');
+  const history = useHistory();
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -29,13 +31,24 @@ const LandingPage = () => {
     fetchFeaturedProducts();
   }, []);
 
+  const handleSearch = (e) => {
+    e.preventDefault();
+    history.push(`/products?search=${search}`);
+  };
+
   return (
     <div className="container">
       <h1>Welcome to EmpExchange</h1>
-      <div className="mb-3">
-        <input type="text" placeholder="Search for products..." className="form-control" />
-        <button className="btn btn-primary mt-2">Search</button>
-      </div>
+      <form onSubmit={handleSearch} className="mb-3">
+        <input
+          type="text"
+          placeholder="Search for products..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="form-control"
+        />
+        <button type="submit" className="btn btn-primary mt-2">Search</button>
+      </form>
       <h2>Categories</h2>
       <ul>
         {categories.map(category => (
