@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Product = require('../models/Product');
+const Product = require('../models/Product');
 
 
 // Get all products
@@ -14,8 +15,23 @@ router.get('/',async(req, res)=>{
 });
 
 // Create a new product
-router.post('/',async(req,res)=>{
-    const product = new Product({
+router.post('/recommend',(req,res)=>{
+   const {product} = req.body;
+
+   let options = {
+    mode: 'text',
+    pythonOptions: ['-u'],
+    args: [JSON.stringify(product)],
+   };
+
+PythonShell.run('recommendation.py',options,(err, results)=>{
+    if (err) throw err;
+    res.json(JSON.parse(results));
+});
+});
+
+   
+ {/*   const product = new Product({
         name: req.body.name,
         category: req.body.category,
         price: req.body.price,
@@ -32,5 +48,6 @@ router.post('/',async(req,res)=>{
         res.status(400).json({message: err.message});
     }
 });
+*/}
 
 module.exports = router;

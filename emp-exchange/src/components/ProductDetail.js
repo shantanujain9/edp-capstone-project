@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { CartContext } from '../contexts/CartContext';  // Adjust the path if needed
-
 const ProductDetail = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
