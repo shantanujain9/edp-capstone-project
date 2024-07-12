@@ -1,63 +1,56 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { CartContext } from '../contexts/CartContext';
+import './Checkout.css';
 
 const Checkout = () => {
-  const { cart, clearCart } = useContext(CartContext);
-  const [name, setName] = useState('');
-  const [address, setAddress] = useState('');
-  const [payment, setPayment] = useState('');
-
-  const handleCheckout = () => {
-    // Here you would send the order to the backend for processing
-    // For now, we'll just clear the cart and log the order
-    console.log({
-      name,
-      address,
-      payment,
-      cart,
+    const { cart, clearCart } = useContext(CartContext);
+    const [order, setOrder] = useState({
+        name: '',
+        address: '',
+        paymentInfo: ''
     });
-    clearCart();
-    alert('Order placed successfully!');
-  };
 
-  return (
-    <div className="container">
-      <h2>Checkout</h2>
-      <form onSubmit={(e) => { e.preventDefault(); handleCheckout(); }}>
-        <div className="mb-3">
-          <label className="form-label">Name</label>
-          <input
-            type="text"
-            className="form-control"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setOrder({ ...order, [name]: value });
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        // Submit order to the backend
+        fetch('/api/checkout', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ order, cart })
+        })
+            .then(response => response.json())
+            .then(data => {
+                clearCart();
+                alert('Order placed successfully!');
+            })
+            .catch(error => console.error('Error during checkout:', error));
+    };
+
+    return (
+        <div className="checkout container">
+            <h2>Checkout</h2>
+            <form onSubmit={handleSubmit}>
+                <label>
+                    Name:
+                    <input type="text" name="name" value={order.name} onChange={handleChange} required />
+                </label>
+                <label>
+                    Address:
+                    <input type="text" name="address" value={order.address} onChange={handleChange} required />
+                </label>
+                <label>
+                    Payment Info:
+                    <input type="text" name="paymentInfo" value={order.paymentInfo} onChange={handleChange} required />
+                </label>
+                <button type="submit">Place Order</button>
+            </form>
         </div>
-        <div className="mb-3">
-          <label className="form-label">Address</label>
-          <input
-            type="text"
-            className="form-control"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-            required
-          />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Payment Information</label>
-          <input
-            type="text"
-            className="form-control"
-            value={payment}
-            onChange={(e) => setPayment(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit" className="btn btn-primary">Place Order</button>
-      </form>
-    </div>
-  );
+    );
 };
 
 export default Checkout;

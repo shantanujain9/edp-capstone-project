@@ -1,34 +1,41 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import { CartContext } from '../contexts/CartContext';
+import './ProductDetail.css';
 
-const ProductDetail = ({ match }) => {
-  const { id } = match.params;
-  const [product, setProduct] = useState({});
-  const { addToCart } = useContext(CartContext);
+const ProductDetail = () => {
+    const { id } = useParams();
+    const [product, setProduct] = useState(null);
+    const { addToCart } = useContext(CartContext);
 
-  useEffect(() => {
-    const fetchProduct = async () => {
-      const response = await axios.get(`http://localhost:5000/products/${id}`);
-      setProduct(response.data);
-    };
+    useEffect(() => {
+        const fetchProduct = async () => {
+            try {
+                const response = await axios.get(`http://localhost:5000/products/${id}`);
+                setProduct(response.data);
+            } catch (error) {
+                console.error('Error fetching product details:', error);
+            }
+        };
 
-    fetchProduct();
-  }, [id]);
+        fetchProduct();
+    }, [id]);
 
-  return (
-    <div className="container">
-      <div className="card">
-        <img src={product.image} className="card-img-top" alt={product.name} />
-        <div className="card-body">
-          <h5 className="card-title">{product.name}</h5>
-          <p className="card-text">{product.description}</p>
-          <p className="card-text">${product.price}</p>
-          <button onClick={() => addToCart(product)} className="btn btn-primary">Add to Cart</button>
+    if (!product) {
+        return <div>Loading...</div>;
+    }
+
+    return (
+        <div className="product-detail container">
+            <img src={product.image} alt={product.name} className="img-fluid" />
+            <h1>{product.name}</h1>
+            <p>{product.description}</p>
+            <p>Price: ${product.price}</p>
+            <button onClick={() => addToCart(product)}>Add to Cart</button>
+            <Link to="/products">Back to Products</Link>
         </div>
-      </div>
-    </div>
-  );
+    );
 };
 
 export default ProductDetail;
