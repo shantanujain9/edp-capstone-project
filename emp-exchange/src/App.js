@@ -1,38 +1,31 @@
 import React from 'react';
-import { Route, Routes, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import LandingPage from './components/LandingPage';
 import ProductList from './components/ProductList';
 import ProductDetail from './components/ProductDetail';
 import Cart from './components/Cart';
 import Checkout from './components/Checkout';
+import CategoryPage from './components/CategoryPage'; // Add this import
+import { CartProvider } from './contexts/CartContext';
+import './App.css';
 
 function App() {
-  return (
-    <div>
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <div className="container">
-          <Link className="navbar-brand" to="/">EmpExchange</Link>
-          <div className="collapse navbar-collapse" id="navbarNav">
-            <ul className="navbar-nav">
-              <li className="nav-item">
-                <Link className="nav-link" to="/products">Products</Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/cart">Cart</Link>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/products" element={<ProductList />} />
-        <Route path="/product/:id" element={<ProductDetail />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/checkout" element={<Checkout />} />
-      </Routes>
-    </div>
-  );
+    return (
+        <CartProvider>
+            <Router>
+                <div className="App">
+                    <Routes>
+                        <Route path="/" element={<LandingPage />} />
+                        <Route path="/products" element={<ProductList />} />
+                        <Route path="/product/:id" element={<ProductDetail />} />
+                        <Route path="/cart" element={<Cart />} />
+                        <Route path="/checkout" element={<Checkout />} />
+                        <Route path="/category/:category" element={<CategoryPage />} /> {/* Add this route */}
+                    </Routes>
+                </div>
+            </Router>
+        </CartProvider>
+    );
 }
 
 export default App;

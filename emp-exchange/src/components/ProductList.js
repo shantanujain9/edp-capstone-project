@@ -1,5 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom'; // Import Link from react-router-dom
+import { CartContext } from '../contexts/CartContext';
+import './ProductList.css'; // Import the CSS file
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
@@ -7,6 +10,8 @@ const ProductList = () => {
   const [error, setError] = useState('');
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState('');
+  const { addToCart } = useContext(CartContext);
+  const [buttonState, setButtonState] = useState({});
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -24,26 +29,38 @@ const ProductList = () => {
   }, []);
 
   useEffect(() => {
+    const filterProducts = () => {
+      let filtered = products;
+
+      if (search) {
+        filtered = filtered.filter(product =>
+          product.name.toLowerCase().includes(search.toLowerCase())
+        );
+      }
+
+      if (category) {
+        filtered = filtered.filter(product => product.category === category);
+      }
+
+      setFilteredProducts(filtered);
+    };
+
     filterProducts();
-  }, [search, category]);
+  }, [search, category, products]);
 
-  const filterProducts = () => {
-    let filtered = products;
-
-    if (search) {
-      filtered = filtered.filter(product =>
-        product.name.toLowerCase().includes(search.toLowerCase())
-      );
-    }
-
-    if (category) {
-      filtered = filtered.filter(product => product.category === category);
-    }
-
-    setFilteredProducts(filtered);
+  const handleAddToCart = (product) => {
+    addToCart(product);
+    setButtonState(prevState => ({
+      ...prevState,
+      [product._id]: true,
+    }));
+    setTimeout(() => {
+      setButtonState(prevState => ({
+        ...prevState,
+        [product._id]: false,
+      }));
+    }, 2000); // Reset button state after 2 seconds
   };
-
- // console.log(products);
 
   return (
     <div className="container">
@@ -79,6 +96,15 @@ const ProductList = () => {
                 <h5 className="card-title">{product.name}</h5>
                 <p className="card-text">{product.description}</p>
                 <p className="card-text">${product.price}</p>
+                <button 
+                  onClick={() => handleAddToCart(product)} 
+                  className={`btn ${buttonState[product._id] ? 'btn-success' : 'btn-primary'}`}
+                >
+                  {buttonState[product._id] ? 'Added!' : 'Add to Cart'}
+                </button>
+                <Link to={`/product/${product._id}`} className="btn btn-link">
+                  View Details
+                </Link>
               </div>
             </div>
           </div>
