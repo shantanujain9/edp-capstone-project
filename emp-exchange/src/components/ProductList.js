@@ -3,17 +3,21 @@ import axios from 'axios';
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [error, setError] = useState('');
+  const [search, setSearch] = useState('');
+  const [category, setCategory] = useState('');
 
   useEffect(() => {
     const fetchProducts = async () => {
-        try {
-      const response = await axios.get('http://localhost:5000/products');
-      setProducts(response.data);
-      setFilteredProducts(response.data);
-        }catch(error){
-            console.error('Error fetching products:',error);
-            setError('Error fetching products');
-        }
+      try {
+        const response = await axios.get('http://localhost:5000/products');
+        setProducts(response.data);
+        setFilteredProducts(response.data);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+        setError('Error fetching products');
+      }
     };
 
     fetchProducts();
@@ -44,8 +48,30 @@ const ProductList = () => {
   return (
     <div className="container">
       <h2>Products</h2>
+      {error && <p className="text-danger">{error}</p>}
+      <div className="mb-3">
+        <input
+          type="text"
+          placeholder="Search products"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="form-control"
+        />
+      </div>
+      <div className="mb-3">
+        <select
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+          className="form-control"
+        >
+          <option value="">All Categories</option>
+          <option value="category1">Category 1</option>
+          <option value="category2">Category 2</option>
+          {/* Add more categories as needed */}
+        </select>
+      </div>
       <div className="row">
-        {products.map(product => (
+        {filteredProducts.map(product => (
           <div className="col-md-4" key={product._id}>
             <div className="card">
               <img src={product.image} className="card-img-top" alt={product.name} />
