@@ -25,11 +25,11 @@ function App() {
         </div>
       </nav>
       <Routes>
-        <Route path="/" exact component={LandingPage} />
-        <Route path="/products" exact component={ProductList} />
-        <Route path="/product/:id" component={ProductDetail} />
-        <Route path="/cart" component={Cart} />
-        <Route path="/checkout" component={Checkout} />
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/products" element={<ProductList />} />
+        <Route path="/product/:id" element={<ProductDetail />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/checkout" element={<Checkout />} />
       </Routes>
     </div>
   );
