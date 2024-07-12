@@ -92,3 +92,9 @@ h2 {
 .btn-link:hover {
     text-decoration: underline;
 }
+
+.quantity-input {
+    width: 50px;
+    margin-right: 10px;
+  }
+  

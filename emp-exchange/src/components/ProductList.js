@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom'; // Import Link from react-router-dom
+import { Link } from 'react-router-dom';
 import { CartContext } from '../contexts/CartContext';
-import './ProductList.css'; // Import the CSS file
+import './ProductList.css';
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
@@ -12,6 +12,7 @@ const ProductList = () => {
   const [category, setCategory] = useState('');
   const { addToCart } = useContext(CartContext);
   const [buttonState, setButtonState] = useState({});
+  const [quantities, setQuantities] = useState({});
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -48,8 +49,18 @@ const ProductList = () => {
     filterProducts();
   }, [search, category, products]);
 
+  const handleQuantityChange = (productId, quantity) => {
+    setQuantities(prevQuantities => ({
+      ...prevQuantities,
+      [productId]: quantity,
+    }));
+  };
+
   const handleAddToCart = (product) => {
-    addToCart(product);
+    const quantity = quantities[product._id] || 1;
+    for (let i = 0; i < quantity; i++) {
+      addToCart(product);
+    }
     setButtonState(prevState => ({
       ...prevState,
       [product._id]: true,
@@ -59,7 +70,7 @@ const ProductList = () => {
         ...prevState,
         [product._id]: false,
       }));
-    }, 2000); // Reset button state after 2 seconds
+    }, 2000);
   };
 
   return (
@@ -96,6 +107,13 @@ const ProductList = () => {
                 <h5 className="card-title">{product.name}</h5>
                 <p className="card-text">{product.description}</p>
                 <p className="card-text">${product.price}</p>
+                <input
+                  type="number"
+                  min="1"
+                  value={quantities[product._id] || 1}
+                  onChange={(e) => handleQuantityChange(product._id, e.target.value)}
+                  className="quantity-input"
+                />
                 <button 
                   onClick={() => handleAddToCart(product)} 
                   className={`btn ${buttonState[product._id] ? 'btn-success' : 'btn-primary'}`}

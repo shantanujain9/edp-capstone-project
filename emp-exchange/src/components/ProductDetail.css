@@ -40,3 +40,10 @@
 .product-detail a:hover{
     text-decoration: underline;
 }
+
+.quantity-input {
+    width: 40px;
+    margin-right: 10px;
+    text-align: center;
+  }
+  

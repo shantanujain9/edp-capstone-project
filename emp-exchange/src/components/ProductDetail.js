@@ -2,11 +2,13 @@ import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { CartContext } from '../contexts/CartContext';  // Adjust the path if needed
+import './ProductDetail.css';
 
 const ProductDetail = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const { addToCart } = useContext(CartContext);
+  const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -17,6 +19,12 @@ const ProductDetail = () => {
     fetchProduct();
   }, [id]);
 
+  const handleAddToCart = () => {
+    for (let i = 0; i < quantity; i++) {
+      addToCart(product);
+    }
+  };
+
   if (!product) return <div>Loading...</div>;
 
   return (
@@ -25,7 +33,14 @@ const ProductDetail = () => {
       <img src={product.image} alt={product.name} />
       <p>{product.description}</p>
       <p>${product.price}</p>
-      <button onClick={() => addToCart(product)} className="btn btn-primary">
+      <input
+        type="number"
+        min="1"
+        value={quantity}
+        onChange={(e) => setQuantity(e.target.value)}
+        className="quantity-input"
+      />
+      <button onClick={handleAddToCart} className="btn btn-primary">
         Add to Cart
       </button>
     </div>

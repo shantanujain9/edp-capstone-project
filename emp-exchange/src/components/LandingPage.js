@@ -8,13 +8,24 @@ const LandingPage = () => {
     const { cart, addToCart } = useContext(CartContext);
     const cartItemCount = cart.length;
     const [buttonState, setButtonState] = useState({});
+    const [quantities, setQuantities] = useState({});
 
     const handleSearchChange = (event) => {
         setSearchText(event.target.value);
     };
 
+    const handleQuantityChange = (productId, quantity) => {
+        setQuantities(prevQuantities => ({
+            ...prevQuantities,
+            [productId]: quantity,
+        }));
+    };
+
     const handleAddToCart = (product) => {
-        addToCart(product);
+        const quantity = quantities[product.id] || 1;
+        for (let i = 0; i < quantity; i++) {
+            addToCart(product);
+        }
         setButtonState(prevState => ({
             ...prevState,
             [product.id]: true,
@@ -53,6 +64,13 @@ const LandingPage = () => {
                     <Link className="nav-item" to="/cart">Cart ({cartItemCount})</Link>
                 </div>
             </nav>
+            
+            <div className="hero">
+                <h1>Welcome to EmpExchange</h1>
+                <p>Your one-stop shop for the best products.</p>
+                <Link to="/products" className="btn btn-hero">Shop Now</Link>
+            </div>
+
             <div className="categories">
                 <h2>Categories</h2>
                 <ul>
@@ -63,6 +81,7 @@ const LandingPage = () => {
                     ))}
                 </ul>
             </div>
+
             <div className="featured-products">
                 <h2>Featured Products</h2>
                 <div className="product-list">
@@ -71,6 +90,13 @@ const LandingPage = () => {
                             <img src={product.image} alt={product.name} />
                             <h3>{product.name}</h3>
                             <p>${product.price.toFixed(2)}</p>
+                            <input
+                                type="number"
+                                min="1"
+                                value={quantities[product.id] || 1}
+                                onChange={(e) => handleQuantityChange(product.id, e.target.value)}
+                                className="quantity-input"
+                            />
                             <button 
                                 onClick={() => handleAddToCart(product)} 
                                 className={`btn ${buttonState[product.id] ? 'btn-success' : 'btn-primary'}`}
