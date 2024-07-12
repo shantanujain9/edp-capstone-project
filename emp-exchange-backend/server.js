@@ -19,12 +19,9 @@ db.once('open',()=> {
     console.log('Connected to MongoDB');
 });
 
-
 const productRoutes = require('./routes/products');
 app.use('/products', productRoutes);
 
-
 app.listen(port, ()=>{
-    console.log('Server is running on port: ${port}');
+    console.log(`Server is running on port: ${port}`);
 });
-

@@ -43,7 +43,7 @@ const ProductList = () => {
     setFilteredProducts(filtered);
   };
 
-  console.log(products);
+ // console.log(products);
 
   return (
     <div className="container">
