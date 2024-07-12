@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch, Link } from 'react-router-dom';
+import { Route, Routes, Link } from 'react-router-dom';
 import LandingPage from './components/LandingPage';
 import ProductList from './components/ProductList';
 import ProductDetail from './components/ProductDetail';
@@ -24,13 +24,13 @@ function App() {
           </div>
         </div>
       </nav>
-      <Switch>
+      <Routes>
         <Route path="/" exact component={LandingPage} />
         <Route path="/products" exact component={ProductList} />
         <Route path="/product/:id" component={ProductDetail} />
         <Route path="/cart" component={Cart} />
         <Route path="/checkout" component={Checkout} />
-      </Switch>
+      </Routes>
     </div>
   );
 }
