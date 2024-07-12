@@ -3,9 +3,6 @@ import axios from 'axios';
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
-  const [filteredProducts, setFilteredProducts] = useState([]);
-  const [search, setSearch] = useState('');
-  const [category, setCategory] = useState('');
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -47,30 +44,8 @@ const ProductList = () => {
   return (
     <div className="container">
       <h2>Products</h2>
-      <div className="mb-3">
-        <input
-          type="text"
-          className="form-control"
-          placeholder="Search for products..."
-          value={search}
-          onChange={e => setSearch(e.target.value)}
-        />
-      </div>
-      <div className="mb-3">
-        <select
-          className="form-control"
-          value={category}
-          onChange={e => setCategory(e.target.value)}
-        >
-          <option value="">All Categories</option>
-          <option value="Category1">Category1</option>
-          <option value="Category2">Category2</option>
-          <option value="Category3">Category3</option>
-          {/* Add more categories as needed */}
-        </select>
-      </div>
       <div className="row">
-        {filteredProducts.map(product => (
+        {products.map(product => (
           <div className="col-md-4" key={product._id}>
             <div className="card">
               <img src={product.image} className="card-img-top" alt={product.name} />
