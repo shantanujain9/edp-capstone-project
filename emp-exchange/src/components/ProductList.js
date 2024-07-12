@@ -1,77 +1,84 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useLocation } from 'react-router-dom';
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
-  const [filteredProducts, setFilteredProducts] = useState([]);
-  const [error, setError] = useState('');
+  const [categories, setCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('');
   const [search, setSearch] = useState('');
-  const [category, setCategory] = useState('');
+  const location = useLocation();
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await axios.get('http://localhost:5000/products');
-        setProducts(response.data);
-        setFilteredProducts(response.data);
-      } catch (error) {
-        console.error('Error fetching products:', error);
-        setError('Error fetching products');
-      }
+    const fetchCategories = async () => {
+      const response = await axios.get('http://localhost:5000/products/categories');
+      setCategories(response.data);
     };
 
-    fetchProducts();
+    fetchCategories();
   }, []);
 
   useEffect(() => {
-    filterProducts();
-  }, [search, category]);
+    const fetchProducts = async () => {
+      const params = new URLSearchParams(location.search);
+      const category = params.get('category') || '';
+      const searchQuery = params.get('search') || '';
 
-  const filterProducts = () => {
-    let filtered = products;
+      const response = await axios.get('http://localhost:5000/products', {
+        params: {
+          category,
+          search: searchQuery
+        }
+      });
+      setProducts(response.data);
+      setSelectedCategory(category);
+      setSearch(searchQuery);
+    };
 
-    if (search) {
-      filtered = filtered.filter(product =>
-        product.name.toLowerCase().includes(search.toLowerCase())
-      );
-    }
+    fetchProducts();
+  }, [location.search]);
 
-    if (category) {
-      filtered = filtered.filter(product => product.category === category);
-    }
-
-    setFilteredProducts(filtered);
+  const handleCategoryChange = (e) => {
+    const category = e.target.value;
+    const query = new URLSearchParams();
+    if (category) query.set('category', category);
+    if (search) query.set('search', search);
+    window.history.pushState(null, '', `?${query.toString()}`);
   };
 
- // console.log(products);
+  const handleSearch = (e) => {
+    e.preventDefault();
+    const query = new URLSearchParams();
+    if (selectedCategory) query.set('category', selectedCategory);
+    if (search) query.set('search', search);
+    window.history.pushState(null, '', `?${query.toString()}`);
+  };
 
   return (
     <div className="container">
       <h2>Products</h2>
-      {error && <p className="text-danger">{error}</p>}
-      <div className="mb-3">
+      <form onSubmit={handleSearch}>
         <input
           type="text"
           placeholder="Search products"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="form-control"
+          className="form-control mb-3"
         />
-      </div>
-      <div className="mb-3">
-        <select
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-          className="form-control"
-        >
-          <option value="">All Categories</option>
-          <option value="category1">Category 1</option>
-          <option value="category2">Category 2</option>
-          {/* Add more categories as needed */}
-        </select>
-      </div>
+        <button type="submit" className="btn btn-primary mb-3">Search</button>
+      </form>
+      <select
+        value={selectedCategory}
+        onChange={handleCategoryChange}
+        className="form-control mb-3"
+      >
+        <option value="">All Categories</option>
+        {categories.map(category => (
+          <option key={category} value={category}>{category}</option>
+        ))}
+      </select>
       <div className="row">
-        {filteredProducts.map(product => (
+        {products.map(product => (
           <div className="col-md-4" key={product._id}>
             <div className="card">
               <img src={product.image} className="card-img-top" alt={product.name} />
