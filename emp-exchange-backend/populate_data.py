@@ -8,7 +8,7 @@ db = client.empexchange
 products_collection = db.products
 
 # Clear existing data
-products_collection.delete_many({})
+products_collection.drop()
 
 # Initialize Faker
 fake = Faker()
