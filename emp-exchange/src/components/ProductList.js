@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
@@ -8,6 +8,7 @@ const ProductList = () => {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [search, setSearch] = useState('');
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -40,18 +41,27 @@ const ProductList = () => {
 
   const handleCategoryChange = (e) => {
     const category = e.target.value;
-    const query = new URLSearchParams();
-    if (category) query.set('category', category);
-    if (search) query.set('search', search);
-    window.history.pushState(null, '', `?${query.toString()}`);
+    const query = new URLSearchParams(location.search);
+    if (category) {
+      query.set('category', category);
+    } else {
+      query.delete('category');
+    }
+    navigate(`?${query.toString()}`);
   };
 
   const handleSearch = (e) => {
     e.preventDefault();
-    const query = new URLSearchParams();
-    if (selectedCategory) query.set('category', selectedCategory);
-    if (search) query.set('search', search);
-    window.history.pushState(null, '', `?${query.toString()}`);
+    const query = new URLSearchParams(location.search);
+    if (selectedCategory) {
+      query.set('category', selectedCategory);
+    }
+    if (search) {
+      query.set('search', search);
+    } else {
+      query.delete('search');
+    }
+    navigate(`?${query.toString()}`);
   };
 
   return (
