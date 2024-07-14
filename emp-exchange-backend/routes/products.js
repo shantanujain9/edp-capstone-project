@@ -73,6 +73,19 @@ router.get('/featured', async (req, res) => {
   }
 });
 
+// Get a single product by ID
+router.get('/:id', async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id);
+    if (product == null) {
+      return res.status(404).json({ message: 'Cannot find product' });
+    }
+    res.json(product);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 // Recommend products
 router.post('/recommend', (req, res) => {
   const { product } = req.body;
