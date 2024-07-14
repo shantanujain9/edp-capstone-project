@@ -10,11 +10,19 @@ const ProductDetail = () => {
   const [recommendations, setRecommendations] = useState([]);
   const { addToCart } = useContext(CartContext);
   const [quantity, setQuantity] = useState(1);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     const fetchProduct = async () => {
-      const response = await axios.get(`http://localhost:5000/products/${id}`);
-      setProduct(response.data);
+      try {
+        console.log('Fetching product:', id);
+        const response = await axios.get(`http://localhost:5000/products/${id}`);
+        console.log('Product fetched:', response.data);
+        setProduct(response.data);
+      } catch (error) {
+        console.error('Error fetching product:', error);
+        setError('Error fetching product');
+      }
     };
 
     fetchProduct();

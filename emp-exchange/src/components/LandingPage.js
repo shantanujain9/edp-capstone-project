@@ -10,7 +10,7 @@ const LandingPage = () => {
   const [search, setSearch] = useState('');
   const { cart, addToCart } = useContext(CartContext);
   const cartItemCount = cart.length;
-  const history = useNavigate();
+  const navigate = useNavigate();
   const [buttonState, setButtonState] = useState({});
   const [quantities, setQuantities] = useState({});
 
@@ -39,7 +39,7 @@ const LandingPage = () => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    history.push(`/products?search=${search}`);
+    navigate(`/products?search=${search}`);
   };
 
   const handleSearchChange = (event) => {
@@ -81,7 +81,7 @@ const LandingPage = () => {
             onChange={handleSearchChange}
             placeholder="Search for products..."
           />
-          <button onClick={() => history.push(`/products?search=${search}`)}>Search</button>
+          <button onClick={handleSearch}>Search</button>
         </div>
         <div className="navbar-right">
           <Link className="nav-item" to="/products">Products</Link>
