@@ -13,8 +13,12 @@ const ProductDetail = () => {
 
   useEffect(() => {
     const fetchProduct = async () => {
-      const response = await axios.get(`http://localhost:5000/products/${id}`);
-      setProduct(response.data);
+      try {
+        const response = await axios.get(`http://localhost:5000/products/${id}`);
+        setProduct(response.data);
+      } catch (error) {
+        console.error('Error fetching product:', error);
+      }
     };
 
     fetchProduct();
