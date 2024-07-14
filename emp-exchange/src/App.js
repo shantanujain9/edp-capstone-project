@@ -14,7 +14,6 @@ import Footer from './components/Footer'; // Footer Component
 function App() {
   return (
     <div className="app-container">
-    <div className="app-container">
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="container">
           <Link className="navbar-brand" to="/">EmpExchange</Link>
