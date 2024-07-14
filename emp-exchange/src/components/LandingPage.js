@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { CartContext } from '../contexts/CartContext';
 import './LandingPage.css';
 
@@ -10,7 +10,7 @@ const LandingPage = () => {
   const [search, setSearch] = useState('');
   const { cart, addToCart } = useContext(CartContext);
   const cartItemCount = cart.length;
-  const history = useHistory();
+  const history = useNavigate();
   const [buttonState, setButtonState] = useState({});
   const [quantities, setQuantities] = useState({});
 
