@@ -5,7 +5,6 @@ import ProductList from './components/ProductList';
 import ProductDetail from './components/ProductDetail';
 import Cart from './components/Cart';
 import Checkout from './components/Checkout';
-<<<<<<< HEAD
 import About from './components/About';
 import Contact from './components/Contact';
 import Privacy from './components/Privacy';
@@ -14,12 +13,6 @@ import Footer from './components/Footer';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import { AuthContext } from './contexts/AuthContext';
-
-=======
-import About from './components/About'; // Additional Page
-import Contact from './components/Contact'; // Additional Page
-import Footer from './components/Footer'; // Footer Component
->>>>>>> 4d86a0f5674cd51b6c01cdcb473ea9112afa8142
 
 function App() {
   const { isAuthenticated, user, logout } = useContext(AuthContext);
@@ -43,7 +36,6 @@ function App() {
               <li className="nav-item">
                 <Link className="nav-link" to="/contact">Contact</Link>
               </li>
-<<<<<<< HEAD
               <li className="nav-item">
                 <Link className="nav-link" to="/privacy">Privacy</Link>
               </li>
@@ -60,8 +52,6 @@ function App() {
                   </li>
                 </>
               )}
-=======
->>>>>>> 4d86a0f5674cd51b6c01cdcb473ea9112afa8142
             </ul>
             {isAuthenticated && (
               <div className="navbar-right">
@@ -78,7 +68,6 @@ function App() {
         <Route path="/product/:id" element={<ProductDetail />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<Checkout />} />
-<<<<<<< HEAD
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/privacy" element={<Privacy />} />
@@ -87,12 +76,6 @@ function App() {
         <Route path="/signup" element={<Signup />} />
       </Routes>
       <Footer />
-=======
-        <Route path="/about" element={<About />} /> {/* Additional Route */}
-        <Route path="/contact" element={<Contact />} /> {/* Additional Route */}
-      </Routes>
-      <Footer /> {/* Add the Footer component */}
->>>>>>> 4d86a0f5674cd51b6c01cdcb473ea9112afa8142
     </div>
   );
 }

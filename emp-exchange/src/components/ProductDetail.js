@@ -7,7 +7,6 @@ import './ProductDetail.css';
 const ProductDetail = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
-  const [recommendations, setRecommendations] = useState([]);
   const { addToCart } = useContext(CartContext);
   const [quantity, setQuantity] = useState(1);
   const [error, setError] = useState('');
@@ -27,11 +26,6 @@ const ProductDetail = () => {
 
     fetchProduct();
   }, [id]);
-
-  const getRecommendations = async () => {
-    const response = await axios.post('http://localhost:5000/products/recommend', { product });
-    setRecommendations(response.data);
-  };
 
   const handleAddToCart = () => {
     addToCart(product, quantity);
@@ -55,25 +49,8 @@ const ProductDetail = () => {
       <button onClick={handleAddToCart} className="btn btn-primary">
         Add to Cart
       </button>
-      <button onClick={getRecommendations} className="btn btn-secondary">
-        Get Recommendations
-      </button>
-      {recommendations.length > 0 && (
-        <div>
-          <h3>Recommended Products</h3>
-          <ul>
-            {recommendations.map((rec, index) => (
-              <li key={index}>{rec.name} - ${rec.price}</li>
-            ))}
-          </ul>
-        </div>
-      )}
     </div>
   );
 };
 
 export default ProductDetail;
-<<<<<<< HEAD
-
-=======
->>>>>>> 4d86a0f5674cd51b6c01cdcb473ea9112afa8142
