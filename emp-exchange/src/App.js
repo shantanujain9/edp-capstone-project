@@ -14,6 +14,7 @@ import Footer from './components/Footer'; // Footer Component
 function App() {
   return (
     <div className="app-container">
+    <div className="app-container">
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="container">
           <Link className="navbar-brand" to="/">EmpExchange</Link>
@@ -24,6 +25,18 @@ function App() {
               </li>
               <li className="nav-item">
                 <Link className="nav-link" to="/cart">Cart</Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/about">About</Link> {/* Additional Link */}
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/contact">Contact</Link> {/* Additional Link */}
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/privacy">Privacy</Link> {/* Additional Link */}
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/terms">Terms</Link> {/* Additional Link */}
               </li>
               <li className="nav-item">
                 <Link className="nav-link" to="/about">About</Link> {/* Additional Link */}
