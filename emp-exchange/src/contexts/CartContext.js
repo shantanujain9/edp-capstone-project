@@ -10,7 +10,12 @@ export const CartProvider = ({ children }) => {
   };
 
   const removeFromCart = (productId) => {
-    setCart(cart.filter(product => product._id !== productId));
+    const productIndex = cart.findIndex(product => product._id === productId);
+    if (productIndex >= 0) {
+      const updatedCart = [...cart];
+      updatedCart.splice(productIndex, 1);
+      setCart(updatedCart);
+    }
   };
 
   const clearCart = () => {
