@@ -97,9 +97,11 @@ router.post('/recommend', (req, res) => {
   };
 
   PythonShell.run('recommendation.py', options, (err, results) => {
-    if (err) throw err;
+    if (err) {
+      console.error('Error running Python script:', err);
+      return res.status(500).json({ message: 'Error generating recommendations' });
+    }
     res.json(JSON.parse(results));
   });
 });
-
 module.exports = router;

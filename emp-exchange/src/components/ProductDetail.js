@@ -29,8 +29,13 @@ const ProductDetail = () => {
   }, [id]);
 
   const getRecommendations = async () => {
-    const response = await axios.post('http://localhost:5000/products/recommend', { product });
-    setRecommendations(response.data);
+    try {
+      const response = await axios.post('http://localhost:5000/products/recommend', { product });
+      setRecommendations(response.data);
+    } catch (error) {
+      console.error('Error fetching recommendations:', error);
+      setError('Error fetching recommendations');
+    }
   };
 
   const handleAddToCart = () => {
@@ -39,7 +44,13 @@ const ProductDetail = () => {
     }
   };
 
-  if (!product) return <div>Loading...</div>;
+  if (error) {
+    return <div className="error">{error}</div>;
+  }
+
+  if (!product) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="container">
