@@ -73,7 +73,3 @@ const ProductDetail = () => {
 };
 
 export default ProductDetail;
-<<<<<<< HEAD
-
-=======
->>>>>>> 4d86a0f5674cd51b6c01cdcb473ea9112afa8142
