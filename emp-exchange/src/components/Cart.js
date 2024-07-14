@@ -15,15 +15,15 @@ const Cart = () => {
       ) : (
         <>
           <ul className="list-group">
-            {cart.map(product => (
-              <li key={product._id} className="list-group-item d-flex justify-content-between align-items-center">
+            {cart.map((product, index) => (
+              <li key={index} className="list-group-item d-flex justify-content-between align-items-center">
                 {product.name}
                 <span>${product.price}</span>
-                <button onClick={() => removeFromCart(product._id)} className="btn btn-danger btn-sm">Remove</button>
+                <button onClick={() => removeFromCart(product.uniqueId)} className="btn btn-danger btn-sm">Remove</button>
               </li>
             ))}
           </ul>
-          <h3>Total: ${total}</h3>
+          <h3>Total: ${total.toFixed(2)}</h3>
           <Link to="/checkout" className="btn btn-success">Checkout</Link>
           <button onClick={clearCart} className="btn btn-danger">Clear Cart</button>
         </>

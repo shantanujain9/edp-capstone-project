@@ -5,17 +5,17 @@ export const CartContext = createContext();
 export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
 
-  const addToCart = (product) => {
-    setCart([...cart, product]);
+  const addToCart = (product, quantity) => {
+    const updatedCart = [...cart];
+    for (let i = 0; i < quantity; i++) {
+      updatedCart.push({ ...product, uniqueId: `${product._id}-${i}` });
+    }
+    setCart(updatedCart);
   };
 
-  const removeFromCart = (productId) => {
-    const productIndex = cart.findIndex(product => product._id === productId);
-    if (productIndex >= 0) {
-      const updatedCart = [...cart];
-      updatedCart.splice(productIndex, 1);
-      setCart(updatedCart);
-    }
+  const removeFromCart = (uniqueId) => {
+    const updatedCart = cart.filter(product => product.uniqueId !== uniqueId);
+    setCart(updatedCart);
   };
 
   const clearCart = () => {

@@ -84,9 +84,7 @@ const ProductList = () => {
 
   const handleAddToCart = (product) => {
     const quantity = quantities[product._id] || 1;
-    for (let i = 0; i < quantity; i++) {
-      addToCart(product);
-    }
+    addToCart(product, quantity);
     setButtonState((prevState) => ({
       ...prevState,
       [product._id]: true,

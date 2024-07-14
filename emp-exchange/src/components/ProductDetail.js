@@ -26,9 +26,7 @@ const ProductDetail = () => {
   };
 
   const handleAddToCart = () => {
-    for (let i = 0; i < quantity; i++) {
-      addToCart(product);
-    }
+    addToCart(product, quantity);
   };
 
   if (!product) return <div>Loading...</div>;
@@ -43,7 +41,7 @@ const ProductDetail = () => {
         type="number"
         min="1"
         value={quantity}
-        onChange={(e) => setQuantity(e.target.value)}
+        onChange={(e) => setQuantity(parseInt(e.target.value, 10))}
         className="quantity-input"
       />
       <button onClick={handleAddToCart} className="btn btn-primary">
@@ -67,3 +65,4 @@ const ProductDetail = () => {
 };
 
 export default ProductDetail;
+

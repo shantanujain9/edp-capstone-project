@@ -10,7 +10,7 @@ const LandingPage = () => {
   const [search, setSearch] = useState('');
   const { cart, addToCart } = useContext(CartContext);
   const cartItemCount = cart.length;
-  const history = useNavigate();
+  const navigate = useNavigate();
   const [buttonState, setButtonState] = useState({});
   const [quantities, setQuantities] = useState({});
 
@@ -39,7 +39,7 @@ const LandingPage = () => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    history.push(`/products?search=${search}`);
+    navigate(`/products?search=${search}`);
   };
 
   const handleSearchChange = (event) => {
@@ -55,9 +55,7 @@ const LandingPage = () => {
 
   const handleAddToCart = (product) => {
     const quantity = quantities[product._id] || 1;
-    for (let i = 0; i < quantity; i++) {
-      addToCart(product);
-    }
+    addToCart(product, quantity);
     setButtonState((prevState) => ({
       ...prevState,
       [product._id]: true,
@@ -73,7 +71,7 @@ const LandingPage = () => {
   return (
     <div className="container">
       <nav className="navbar">
-        <Link className="navbar-brand" to="/">EmpExchange</Link>
+        <Link className="navbar-brand" to="/"></Link>
         <div className="search-box">
           <input
             type="text"
@@ -81,16 +79,15 @@ const LandingPage = () => {
             onChange={handleSearchChange}
             placeholder="Search for products..."
           />
-          <button onClick={() => history.push(`/products?search=${search}`)}>Search</button>
+          <button onClick={handleSearch}>Search</button>
         </div>
         <div className="navbar-right">
-          <Link className="nav-item" to="/products">Products</Link>
-          <Link className="nav-item" to="/cart">Cart ({cartItemCount})</Link>
+          <Link className="nav-item" to="/products"></Link>
+          <Link className="nav-item" to="/cart">ProductsCart ({cartItemCount})</Link>
         </div>
       </nav>
 
       <div className="hero">
-        <h1>Welcome to EmpExchange</h1>
         <p>Your one-stop shop for the best products.</p>
         <Link to="/products" className="btn btn-hero">Shop Now</Link>
       </div>

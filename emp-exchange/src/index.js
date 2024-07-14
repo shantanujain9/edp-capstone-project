@@ -4,20 +4,21 @@ import './index.css';
 import App from './App';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { CartProvider } from './contexts/CartContext';
+import { AuthProvider } from './contexts/AuthContext'; // Ensure this import is correct
 
 const container = document.getElementById('root');
 const root = createRoot(container);
 
 root.render(
   <Router>
-    <CartProvider>
-      <App />
-    </CartProvider>
+    <AuthProvider>
+      <CartProvider>
+        <App />
+      </CartProvider>
+    </AuthProvider>
   </Router>
 );
 
-// The following commented-out code from your file is kept for reference if needed
-/*
 // The following commented-out code from your file is kept for reference if needed
 /*
 const root = ReactDOM.createRoot(document.getElementById('root'));
