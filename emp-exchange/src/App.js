@@ -7,8 +7,6 @@ import Cart from './components/Cart';
 import Checkout from './components/Checkout';
 import About from './components/About'; // Additional Page
 import Contact from './components/Contact'; // Additional Page
-import Privacy from './components/Privacy'; // Additional Page
-import Terms from './components/Terms'; // Additional Page
 import Footer from './components/Footer'; // Footer Component
 
 function App() {
@@ -31,24 +29,6 @@ function App() {
               <li className="nav-item">
                 <Link className="nav-link" to="/contact">Contact</Link> {/* Additional Link */}
               </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/privacy">Privacy</Link> {/* Additional Link */}
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/terms">Terms</Link> {/* Additional Link */}
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/about">About</Link> {/* Additional Link */}
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/contact">Contact</Link> {/* Additional Link */}
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/privacy">Privacy</Link> {/* Additional Link */}
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/terms">Terms</Link> {/* Additional Link */}
-              </li>
             </ul>
           </div>
         </div>
@@ -59,12 +39,10 @@ function App() {
         <Route path="/product/:id" element={<ProductDetail />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<Checkout />} />
-        <Route path="/about" element={<About />} /> {About}
-        <Route path="/contact" element={<Contact />} /> {Contact}
-        <Route path="/privacy" element={<Privacy />} /> {Privacy}
-        <Route path="/terms" element={<Terms />} /> {Terms}
+        <Route path="/about" element={<About />} /> {/* Additional Route */}
+        <Route path="/contact" element={<Contact />} /> {/* Additional Route */}
       </Routes>
-      <Footer /> {Footer}
+      <Footer /> {/* Add the Footer component */}
     </div>
   );
 }
