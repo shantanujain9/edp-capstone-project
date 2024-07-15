@@ -87,8 +87,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-
-// Recomended Products
+// Recommend products
 router.post('/recommend', (req, res) => {
   const product = req.body.product;
   console.log('Received product for recommendation:', product);

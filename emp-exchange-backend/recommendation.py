@@ -19,9 +19,8 @@ def train_model(data):
     model = NearestNeighbors(n_neighbors=5, algorithm='auto').fit(features)
     return model
 
-def recommend_products(model, product):
-    features = [product['popularity'], product['durability'], product['price']]
-    distances, indices = model.kneighbors([features])
+def recommend_products(model, product_features):
+    distances, indices = model.kneighbors([product_features])
     return indices
 
 if __name__ == "__main__":
@@ -29,11 +28,12 @@ if __name__ == "__main__":
     model = train_model(data)
 
     product = json.loads(sys.argv[1])
-    recommendations = recommend_products(model, product)
+    product_features = [product['popularity'], product['durability'], product['price']]
+    recommendations = recommend_products(model, product_features)
     
     # Convert ObjectId to string
     recommended_products = data.iloc[recommendations[0]].to_dict('records')
     for product in recommended_products:
         product['_id'] = str(product['_id'])
-        
+
     print(json.dumps(recommended_products))

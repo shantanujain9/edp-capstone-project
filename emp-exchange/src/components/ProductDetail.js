@@ -26,18 +26,17 @@ const ProductDetail = () => {
     fetchProduct();
   }, [id]);
 
-const getRecommendations = async () => {
-  console.log('Get Recommendations button clicked');
-  try {
-    const response = await axios.post('http://localhost:5000/products/recommend', { product });
-    console.log('Recommendations response:', response);
-    console.log('Recommendations fetched:', response.data);
-    setRecommendations(response.data);
-  } catch (error) {
-    console.error('Error fetching recommendations:', error);
-    setError('Error fetching recommendations');
-  }
-};
+  const getRecommendations = async () => {
+    try {
+      const response = await axios.post('http://localhost:5000/products/recommend', { product });
+      console.log('Recommendations response:', response.data); // Add this line to log the response
+      setRecommendations(response.data);
+    } catch (error) {
+      console.error('Error fetching recommendations:', error);
+      setError('Error fetching recommendations');
+    }
+  };
+
   const handleAddToCart = () => {
     for (let i = 0; i < quantity; i++) {
       addToCart(product);
@@ -76,7 +75,7 @@ const getRecommendations = async () => {
           <h3>Recommended Products</h3>
           <ul>
             {recommendations.map((rec, index) => (
-              <li key={rec._id}>{rec.name} - ${rec.price}</li>
+              <li key={index}>{rec.name} - ${rec.price}</li>
             ))}
           </ul>
         </div>
