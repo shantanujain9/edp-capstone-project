@@ -19,7 +19,9 @@ def train_model(data):
     return model
 
 def recommend_products(model, product):
-    distances, indices = model.kneighbors([product])
+    # Extract relevant features from the product
+    product_features = [product['popularity'], product['durability'], product['price']]
+    distances, indices = model.kneighbors([product_features])
     return indices
 
 if __name__ == "__main__":

@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Product = require('../models/Product');
+const { PythonShell } = require('python-shell');
 
 // Get all products or filter by category or search query
 router.get('/', async (req, res) => {
@@ -97,8 +98,8 @@ router.post('/recommend', (req, res) => {
   };
 
   PythonShell.run('recommendation.py', options, (err, results) => {
-    if (err) throw err;
-    res.json(JSON.parse(results));
+    if (err) return res.status(500).json({ message: err.message });
+    res.json(JSON.parse(results[0]));
   });
 });
 
