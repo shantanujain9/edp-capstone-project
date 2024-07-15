@@ -15,7 +15,7 @@ import Signup from './components/Signup';
 import { AuthContext } from './contexts/AuthContext';
 
 function App() {
-  const { isAuthenticated, user, logout } = useContext(AuthContext);
+  const { token, user, logout } = useContext(AuthContext);
 
   return (
     <div className="app-container">
@@ -42,7 +42,7 @@ function App() {
               <li className="nav-item">
                 <Link className="nav-link" to="/terms">Terms</Link>
               </li>
-              {!isAuthenticated && (
+              {!token ? (
                 <>
                   <li className="nav-item">
                     <Link className="nav-link" to="/login">Login</Link>
@@ -51,14 +51,13 @@ function App() {
                     <Link className="nav-link" to="/signup">Signup</Link>
                   </li>
                 </>
+              ) : (
+                <li className="nav-item navbar-right">
+                  <span className="navbar-text">Logged in as {user ? user.name : ''}</span>
+                  <button className="btn btn-link nav-link" onClick={logout}>Logout</button>
+                </li>
               )}
             </ul>
-            {isAuthenticated && (
-              <div className="navbar-right">
-                <span className="navbar-text">Logged in as {user.email}</span>
-                <button className="btn btn-link nav-link" onClick={logout}>Logout</button>
-              </div>
-            )}
           </div>
         </div>
       </nav>

@@ -1,50 +1,43 @@
 import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
-import './Signup.css';
 
 const Signup = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: '',
+  });
+
+  const { name, email, password } = formData;
+  const navigate = useNavigate();
   const { signup } = useContext(AuthContext);
 
-  const handleSubmit = async (e) => {
+  const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
+
+  const onSubmit = async (e) => {
     e.preventDefault();
-    if (email && password) {
-      try {
-        await signup(email, password);
-      } catch (error) {
-        setError(error.response.data);
-      }
-    } else {
-      alert('Please fill in all fields');
-    }
+    await signup({ name, email, password });
+    navigate('/'); // Redirect to homepage
   };
 
   return (
-    <div className="signup-container">
-      <h2>Signup</h2>
-      {error && <p className="text-danger">{error}</p>}
-      <form onSubmit={handleSubmit}>
+    <div className="container">
+      <h2>Sign Up</h2>
+      <form onSubmit={onSubmit}>
         <div className="form-group">
-          <label>Email:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
+          <label>Name</label>
+          <input type="text" name="name" value={name} onChange={onChange} required />
         </div>
         <div className="form-group">
-          <label>Password:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
+          <label>Email</label>
+          <input type="email" name="email" value={email} onChange={onChange} required />
         </div>
-        <button type="submit" className="btn btn-primary">Signup</button>
+        <div className="form-group">
+          <label>Password</label>
+          <input type="password" name="password" value={password} onChange={onChange} required />
+        </div>
+        <button type="submit">Sign Up</button>
       </form>
     </div>
   );

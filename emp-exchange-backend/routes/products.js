@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { PythonShell } = require('python-shell');
 const Product = require('../models/Product');
 
 // Get all products or filter by category or search query
@@ -86,19 +87,24 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// Recommend products
+
+// Recomended Products
 router.post('/recommend', (req, res) => {
-  const { product } = req.body;
+  const product = req.body.product;
+  console.log('Received product for recommendation:', product);
 
   let options = {
-    mode: 'text',
-    pythonOptions: ['-u'],
-    args: [JSON.stringify(product)],
+    mode: 'json',
+    args: [JSON.stringify(product)]
   };
 
-  PythonShell.run('recommendation.py', options, (err, results) => {
-    if (err) throw err;
-    res.json(JSON.parse(results));
+  PythonShell.run('recommendation.py', options, function (err, results) {
+    if (err) {
+      console.error(`Error generating recommendations: ${err}`);
+      return res.status(500).send(`Error generating recommendations: ${err}`);
+    }
+    console.log('Results from Python script:', results);
+    res.json(results);
   });
 });
 

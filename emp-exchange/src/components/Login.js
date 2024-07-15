@@ -1,50 +1,38 @@
 import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
-import './Login.css';
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+  });
+
+  const { email, password } = formData;
+  const navigate = useNavigate();
   const { login } = useContext(AuthContext);
 
-  const handleSubmit = async (e) => {
+  const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
+
+  const onSubmit = async (e) => {
     e.preventDefault();
-    if (email && password) {
-      try {
-        await login(email, password);
-      } catch (error) {
-        setError(error.response.data);
-      }
-    } else {
-      alert('Please fill in all fields');
-    }
+    await login({ email, password });
+    navigate('/'); // Redirect to homepage
   };
 
   return (
-    <div className="login-container">
+    <div className="container">
       <h2>Login</h2>
-      {error && <p className="text-danger">{error}</p>}
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={onSubmit}>
         <div className="form-group">
-          <label>Email:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
+          <label>Email</label>
+          <input type="email" name="email" value={email} onChange={onChange} required />
         </div>
         <div className="form-group">
-          <label>Password:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
+          <label>Password</label>
+          <input type="password" name="password" value={password} onChange={onChange} required />
         </div>
-        <button type="submit" className="btn btn-primary">Login</button>
+        <button type="submit">Login</button>
       </form>
     </div>
   );

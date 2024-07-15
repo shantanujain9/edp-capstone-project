@@ -1,64 +1,56 @@
 import React, { createContext, useState, useEffect } from 'react';
+import { jwtDecode } from 'jwt-decode';
 import axios from 'axios';
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [authState, setAuthState] = useState({
-    isAuthenticated: false,
+  const [auth, setAuth] = useState({
+    token: localStorage.getItem('token'),
     user: null,
   });
 
   useEffect(() => {
-    const storedAuthState = localStorage.getItem('authState');
-    if (storedAuthState) {
-      setAuthState(JSON.parse(storedAuthState));
+    if (auth.token) {
+      const decoded = jwtDecode(auth.token);
+      setAuth((prevState) => ({
+        ...prevState,
+        user: decoded.user,
+      }));
     }
-  }, []);
+  }, [auth.token]);
 
-  useEffect(() => {
-    localStorage.setItem('authState', JSON.stringify(authState));
-  }, [authState]);
-
-  const login = async (email, password) => {
+  const login = async (formData) => {
     try {
-      const response = await axios.post('http://localhost:5000/auth/login', { email, password });
-      setAuthState({
-        isAuthenticated: true,
-        user: response.data.user,
-      });
-      window.location.href = '/';
-    } catch (error) {
-      console.error('Login failed:', error);
-      alert(error.response.data);
+      const res = await axios.post('http://localhost:5000/api/auth/login', formData);
+      const token = res.data.token;
+      localStorage.setItem('token', token);
+      const decoded = jwtDecode(token);
+      setAuth({ token, user: decoded.user });
+    } catch (err) {
+      console.error(err.response.data);
     }
   };
 
-  const signup = async (email, password) => {
+  const signup = async (formData) => {
     try {
-      const response = await axios.post('http://localhost:5000/auth/signup', { email, password });
-      setAuthState({
-        isAuthenticated: true,
-        user: response.data.user,
-      });
-      window.location.href = '/';
-    } catch (error) {
-      console.error('Signup failed:', error);
-      alert(error.response.data);
+      const res = await axios.post('http://localhost:5000/api/auth/signup', formData);
+      const token = res.data.token;
+      localStorage.setItem('token', token);
+      const decoded = jwtDecode(token);
+      setAuth({ token, user: decoded.user });
+    } catch (err) {
+      console.error(err.response.data);
     }
   };
 
   const logout = () => {
-    setAuthState({
-      isAuthenticated: false,
-      user: null,
-    });
-    localStorage.removeItem('authState');
-    window.location.href = '/login';
+    setAuth({ token: null, user: null });
+    localStorage.removeItem('token');
   };
 
   return (
-    <AuthContext.Provider value={{ ...authState, login, signup, logout }}>
+    <AuthContext.Provider value={{ ...auth, login, signup, logout }}>
       {children}
     </AuthContext.Provider>
   );
