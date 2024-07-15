@@ -3,6 +3,7 @@ from sklearn.neighbors import NearestNeighbors
 from pymongo import MongoClient
 import sys
 import json
+import pickle
 from bson import ObjectId
 
 def load_data():
@@ -23,10 +24,25 @@ def recommend_products(model, product_features):
     distances, indices = model.kneighbors([product_features])
     return indices
 
-if __name__ == "__main__":
-    data = load_data()
-    model = train_model(data)
+def save_model(model, filename):
+    with open(filename, 'wb') as f:
+        pickle.dump(model, f)
 
+def load_model(filename):
+    with open(filename, 'rb') as f:
+        return pickle.load(f)
+
+if __name__ == "__main__":
+    # Load data and train model if not already trained
+    data = load_data()
+
+    model_filename = 'nearest_neighbors_model.pkl'
+    try:
+        model = load_model(model_filename)
+    except FileNotFoundError:
+        model = train_model(data)
+        save_model(model, model_filename)
+    
     product = json.loads(sys.argv[1])
     product_features = [product['popularity'], product['durability'], product['price']]
     recommendations = recommend_products(model, product_features)

@@ -17,15 +17,11 @@ const Login = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    if (email && password) {
-      try {
-        await login({ email, password });
-        navigate('/'); // Redirect to homepage
-      } catch (error) {
-        setError(error.response.data);
-      }
-    } else {
-      alert('Please fill in all fields');
+    try {
+      await login({ email, password });
+      navigate('/'); // Redirect to homepage on successful login
+    } catch (err) {
+      setError('Invalid credentials');
     }
   };
 

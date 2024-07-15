@@ -8,7 +8,7 @@ const Signup = () => {
     email: '',
     password: '',
   });
-
+  const [error, setError] = useState('');
   const { name, email, password } = formData;
   const navigate = useNavigate();
   const { signup } = useContext(AuthContext);
@@ -17,13 +17,18 @@ const Signup = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    await signup({ name, email, password });
-    navigate('/'); // Redirect to homepage
+    try {
+      await signup({ name, email, password });
+      navigate('/'); // Redirect to homepage on successful signup
+    } catch (err) {
+      setError('Error signing up: ' + (err.response?.data?.msg || err.message));
+    }
   };
 
   return (
     <div className="container">
       <h2>Sign Up</h2>
+      {error && <p className="text-danger">{error}</p>}
       <form onSubmit={onSubmit}>
         <div className="form-group">
           <label>Name</label>

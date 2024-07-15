@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { jwtDecode } from 'jwt-decode'; // Correctly importing the named export
 import axios from 'axios';
+import {jwtDecode } from 'jwt-decode';
 
 export const AuthContext = createContext();
 
@@ -28,7 +28,7 @@ export const AuthProvider = ({ children }) => {
       const decoded = jwtDecode(token);
       setAuth({ token, user: decoded.user });
     } catch (err) {
-      console.error(err.response.data);
+      throw new Error('Invalid credentials');
     }
   };
 
@@ -40,7 +40,7 @@ export const AuthProvider = ({ children }) => {
       const decoded = jwtDecode(token);
       setAuth({ token, user: decoded.user });
     } catch (err) {
-      console.error(err.response.data);
+      throw new Error(err.response?.data?.msg || 'Error signing up');
     }
   };
 

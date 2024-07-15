@@ -88,7 +88,7 @@ const LandingPage = () => {
       </nav>
 
       <div className="hero">
-        <h1>Welcome to EmpExchange</h1>
+        <h1>Welcome to Umbrella Store</h1>
         <p>Your one-stop shop for the best products.</p>
         <Link to="/products" className="btn btn-hero">Shop Now</Link>
       </div>

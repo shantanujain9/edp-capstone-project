@@ -12,6 +12,7 @@ import Terms from './components/Terms';
 import Footer from './components/Footer';
 import Login from './components/Login';
 import Signup from './components/Signup';
+import UserProfile from './components/UserProfile';  // Import UserProfile
 import { AuthContext } from './contexts/AuthContext';
 
 function App() {
@@ -21,7 +22,7 @@ function App() {
     <div className="app-container">
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container-fluid">
-          <Link className="navbar-brand" to="/">EmpExchange</Link>
+          <Link className="navbar-brand" to="/">Umbrella Store</Link>
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>
@@ -57,10 +58,15 @@ function App() {
                   </li>
                 </>
               ) : (
-                <li className="nav-item">
-                  <span className="navbar-text">Logged in as {user ? user.name : ''}</span>
-                  <button className="btn btn-link nav-link" onClick={logout}>Logout</button>
-                </li>
+                <>
+                  <li className="nav-item">
+                    <span className="navbar-text">Logged in as {user ? user.name : ''}</span>
+                    <button className="btn btn-link nav-link" onClick={logout}>Logout</button>
+                  </li>
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/profile">Profile</Link>
+                  </li>
+                </>
               )}
             </ul>
           </div>
@@ -78,6 +84,7 @@ function App() {
         <Route path="/terms" element={<Terms />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/profile" element={<UserProfile />} />  {/* Add UserProfile route */}
       </Routes>
       <Footer />
     </div>
