@@ -1,42 +1,116 @@
-.product-detail {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+/* Container for the entire products section */
+.products-section {
+    background-color: #9ab5cf;
+    /* Light grey background */
     padding: 20px;
-}
-
-.product-detail img {
-    max-width: 300px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    /* Subtle shadow */
     margin-bottom: 20px;
 }
 
-.product-detail h1 {
+/* Flex container for the search/filter and product list */
+.search-and-products {
+    display: flex;
+    align-items: flex-start;
+    /* Align items to the top */
+}
+
+/* Container for the search box and category filter */
+.search-filter-container {
+    background-color: #9ab5cf;
+    /* Light grey background */
+    padding: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    /* Subtle shadow */
+    margin-right: 20px;
+    /* Space between filter and products */
+    width: 250px;
+    /* Adjust the width as needed */
+    text-align: center;
+    /* Center align items horizontally */
+}
+
+/* Adjust the heading size and alignment */
+.search-filter-container h2 {
+    font-size: 24px;
+    /* Smaller font size */
+    margin-bottom: 10px;
+}
+
+/* Adjust input and button sizes */
+.search-filter-container .form-control,
+.search-filter-container .btn {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+/* Container for the product list */
+.product-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    background-color: #9ab5cf;
+    /* Light grey background */
+    padding: 20px;
+    border-radius: 8px;
+    flex: 1;
+    /* Take the remaining space */
+}
+
+.product-item {
+    flex: 1 0 30%;
+    box-sizing: border-box;
+    padding: 10px;
+    margin-bottom: 20px;
+    background-color: #ffffff;
+    /* White background for product cards */
+    border: 1px solid #dddddd;
+    /* Light grey border for product cards */
+    border-radius: 8px;
+    /* Rounded corners for product cards */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    /* Subtle shadow for product cards */
+    text-align: center;
+}
+
+.product-item img {
+    width: 100%;
+    height: auto;
+    border-bottom: 1px solid #dddddd;
+    /* Separator for image */
+    margin-bottom: 10px;
+}
+
+.product-item h3 {
+    color: #333333;
+    /* Dark grey text color */
     margin: 10px 0;
 }
 
-.product-detail p {
-    margin: 5px 0;
+.product-item p {
+    color: #666666;
+    /* Lighter grey for descriptions */
 }
 
-.product-detail button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    cursor: pointer;
+.quantity-input {
+    width: 50px;
+    /* Width of the quantity input */
+    margin: 10px 0;
 }
 
-.product-detail button:hover {
-    background-color: #218838;
+.btn-primary,
+.btn-success {
+    width: 100%;
+    margin-bottom: 10px;
 }
 
-.product-detail a {
-    margin-top: 20px;
+.btn-link {
     color: #007bff;
+    /* Bootstrap blue for links */
     text-decoration: none;
 }
 
-.product-detail a:hover {
+.btn-link:hover {
     text-decoration: underline;
 }

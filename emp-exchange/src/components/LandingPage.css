@@ -1,28 +1,120 @@
+body,
+html,
+.container-fluid {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-.container {
-    padding:20px;
-  }
-  
-  .search-box{
-    margin-bottom:20px;
-  }
-  
-  .categories ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .categories li {
-    margin: 5px 0;
-  }
-  
-  .featured-products .product-list {
-    display: flex;
-    flex-wrap: wrap;
-  }
-  
-  .featured-products .product-item {
-    margin: 10px;
-    border: 1px solid #ccc;
-    padding: 10px
-  }
+.hero {
+  width: 100%;
+  background-color: #007bff;
+  color: white;
+  text-align: center;
+  padding: 50px 0;
+}
+
+.hero h1 {
+  font-size: 3em;
+  margin-bottom: 20px;
+}
+
+.hero p {
+  font-size: 1.5em;
+  margin-bottom: 20px;
+}
+
+.hero .search-box {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.hero .search-box input {
+  width: 300px;
+  padding: 10px;
+  border-radius: 5px 0 0 5px;
+  border: none;
+}
+
+.hero .search-box button {
+  padding: 10px;
+  border-radius: 0 5px 5px 0;
+  border: none;
+  background-color: #0056b3;
+  color: white;
+}
+
+.categories {
+  padding: 20px;
+  text-align: center;
+  background-color: #e9ecef;
+  /* Light grey background for categories section */
+}
+
+.categories h2 {
+  margin-bottom: 20px;
+}
+
+.categories ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.categories ul li {
+  display: inline-block;
+  margin: 0 70px;
+  /* Increase margin for more space between category names */
+}
+
+.featured-products {
+  padding: 20px;
+  text-align: center;
+  background-color: #9ab5cf;
+  /* Slightly darker grey background for featured products section */
+}
+
+.featured-products h2 {
+  margin-bottom: 20px;
+}
+
+.product-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.product-item {
+  flex: 1 0 21%;
+  /* Adjust to set the number of products per row */
+  margin: 10px;
+  border: 0px solid #ddd;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: white;
+  /* White background for product items */
+}
+
+.product-item img {
+  width: 100%;
+  height: auto;
+}
+
+.footer {
+  width: 100%;
+  background-color: #333;
+  color: #fff;
+  padding: 20px 0;
+  text-align: center;
+}
+
+.footer a {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 10px;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}

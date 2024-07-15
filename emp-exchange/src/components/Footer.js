@@ -12,9 +12,7 @@ const Footer = () => {
                     <Link to="/privacy">Privacy Policy</Link>
                     <Link to="/terms">Terms of Service</Link>
                 </div>
-                <div className="footer-copy">
-                    &copy; {new Date().getFullYear()} EmpExchange. All rights reserved.
-                </div>
+                <p>&copy; {new Date().getFullYear()} EmpExchange. All rights reserved.</p>
             </div>
         </footer>
     );

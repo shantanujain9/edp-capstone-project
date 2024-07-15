@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { CartContext } from '../contexts/CartContext';
-import '../components/ProductDetail.css';
+import './ProductDetail.css';
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -26,6 +26,12 @@ const ProductDetail = () => {
     fetchProduct();
   }, [id]);
 
+  const handleAddToCart = () => {
+    for (let i = 0; i < quantity; i++) {
+      addToCart(product);
+    }
+  };
+
   const getRecommendations = async () => {
     try {
       const response = await axios.post('http://localhost:5000/products/recommend', { product });
@@ -34,12 +40,6 @@ const ProductDetail = () => {
     } catch (error) {
       console.error('Error fetching recommendations:', error);
       setError('Error fetching recommendations');
-    }
-  };
-
-  const handleAddToCart = () => {
-    for (let i = 0; i < quantity; i++) {
-      addToCart(product);
     }
   };
 
@@ -56,12 +56,12 @@ const ProductDetail = () => {
       <h2>{product.name}</h2>
       <img src={product.image} alt={product.name} />
       <p>{product.description}</p>
-      <p>${product.price}</p>
+      <p>${product.price.toFixed(2)}</p>
       <input
         type="number"
         min="1"
         value={quantity}
-        onChange={(e) => setQuantity(e.target.value)}
+        onChange={(e) => setQuantity(parseInt(e.target.value, 10))}
         className="quantity-input"
       />
       <button onClick={handleAddToCart} className="btn btn-primary">
@@ -75,11 +75,12 @@ const ProductDetail = () => {
           <h3>Recommended Products</h3>
           <ul>
             {recommendations.map((rec, index) => (
-              <li key={index}>{rec.name} - ${rec.price}</li>
+              <li key={index}>{rec.name} - ${rec.price.toFixed(2)}</li>
             ))}
           </ul>
         </div>
       )}
+      {error && <p className="text-danger">{error}</p>}
     </div>
   );
 };

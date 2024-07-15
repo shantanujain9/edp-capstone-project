@@ -69,9 +69,9 @@ const LandingPage = () => {
   };
 
   return (
-    <div className="container">
+    <div className="container-fluid">
       <nav className="navbar">
-        <Link className="navbar-brand" to="/"></Link>
+        <Link className="navbar-brand" to="/">EmpExchange</Link>
         <div className="search-box">
           <input
             type="text"
@@ -82,12 +82,13 @@ const LandingPage = () => {
           <button onClick={handleSearch}>Search</button>
         </div>
         <div className="navbar-right">
-          <Link className="nav-item" to="/products"></Link>
-          <Link className="nav-item" to="/cart">ProductsCart ({cartItemCount})</Link>
+          <Link className="nav-item" to="/products">Products</Link>
+          <Link className="nav-item" to="/cart">Cart ({cartItemCount})</Link>
         </div>
       </nav>
 
       <div className="hero">
+        <h1>Welcome to EmpExchange</h1>
         <p>Your one-stop shop for the best products.</p>
         <Link to="/products" className="btn btn-hero">Shop Now</Link>
       </div>

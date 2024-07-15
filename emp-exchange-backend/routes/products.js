@@ -93,8 +93,9 @@ router.post('/recommend', (req, res) => {
   console.log('Received product for recommendation:', product);
 
   let options = {
-    mode: 'json',
-    args: [JSON.stringify(product)]
+    mode: 'text',
+    pythonOptions: ['-u'],
+    args: [JSON.stringify(product)],
   };
 
   PythonShell.run('recommendation.py', options, function (err, results) {
@@ -103,7 +104,7 @@ router.post('/recommend', (req, res) => {
       return res.status(500).send(`Error generating recommendations: ${err}`);
     }
     console.log('Results from Python script:', results);
-    res.json(results);
+    res.json(JSON.parse(results[0]));
   });
 });
 
