@@ -25,7 +25,7 @@ const Login = () => {
     <div className="login-container">
       <h2>Login</h2>
       {error && <p className="text-danger">{error}</p>}
-      <form onSubmit={handleSubmit}>
+      <form className="login-form" onSubmit={handleSubmit}>
         <div className="form-group">
           <label>Email:</label>
           <input

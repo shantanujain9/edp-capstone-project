@@ -98,58 +98,58 @@ const ProductList = () => {
   };
 
   return (
-    <div className="container">
-      <h2>Products</h2>
-      {error && <p className="text-danger">{error}</p>}
-      <form onSubmit={handleSearch}>
-        <input
-          type="text"
-          placeholder="Search products"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="form-control mb-3"
-        />
-        <button type="submit" className="btn btn-primary mb-3">Search</button>
-      </form>
-      <select
-        value={selectedCategory}
-        onChange={handleCategoryChange}
-        className="form-control mb-3"
-      >
-        <option value="">All Categories</option>
-        {categories.map((category) => (
-          <option key={category} value={category}>{category}</option>
-        ))}
-      </select>
-      <div className="row">
-        {products.map((product) => (
-          <div className="col-md-4" key={product._id}>
-            <div className="card">
-              <img src={product.image} className="card-img-top" alt={product.name} />
-              <div className="card-body">
-                <h5 className="card-title">{product.name}</h5>
-                <p className="card-text">{product.description}</p>
-                <p className="card-text">${product.price}</p>
-                <input
-                  type="number"
-                  min="1"
-                  value={quantities[product._id] || 1}
-                  onChange={(e) => handleQuantityChange(product._id, e.target.value)}
-                  className="quantity-input"
-                />
-                <button 
-                  onClick={() => handleAddToCart(product)} 
-                  className={`btn ${buttonState[product._id] ? 'btn-success' : 'btn-primary'}`}
-                >
-                  {buttonState[product._id] ? 'Added!' : 'Add to Cart'}
-                </button>
-                <Link to={`/product/${product._id}`} className="btn btn-link">
-                  View Details
-                </Link>
-              </div>
+    <div className="products-section">
+      <div className="search-and-products">
+        <div className="search-filter-container">
+          <h2>Products</h2>
+          <form onSubmit={handleSearch}>
+            <input
+              type="text"
+              placeholder="Search products"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="form-control mb-3"
+            />
+            <button type="submit" className="btn btn-primary mb-3">Search</button>
+          </form>
+          <select
+            value={selectedCategory}
+            onChange={handleCategoryChange}
+            className="form-control mb-3"
+          >
+            <option value="">All Categories</option>
+            {categories.map((category) => (
+              <option key={category} value={category}>{category}</option>
+            ))}
+          </select>
+        </div>
+        <div className="product-list">
+          {error && <p className="text-danger">{error}</p>}
+          {products.map((product) => (
+            <div className="product-item" key={product._id}>
+              <img src={product.image} alt={product.name} />
+              <h3>{product.name}</h3>
+              <p>{product.description}</p>
+              <p>${product.price}</p>
+              <input
+                type="number"
+                min="1"
+                value={quantities[product._id] || 1}
+                onChange={(e) => handleQuantityChange(product._id, e.target.value)}
+                className="quantity-input"
+              />
+              <button 
+                onClick={() => handleAddToCart(product)} 
+                className={`btn ${buttonState[product._id] ? 'btn-success' : 'btn-primary'}`}
+              >
+                {buttonState[product._id] ? 'Added!' : 'Add to Cart'}
+              </button>
+              <Link to={`/product/${product._id}`} className="btn btn-link">
+                View Details
+              </Link>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );

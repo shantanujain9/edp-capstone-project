@@ -7,6 +7,7 @@ import './ProductDetail.css';
 const ProductDetail = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
+  const [recommendations, setRecommendations] = useState([]);
   const { addToCart } = useContext(CartContext);
   const [quantity, setQuantity] = useState(1);
   const [error, setError] = useState('');
@@ -14,12 +15,9 @@ const ProductDetail = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        console.log('Fetching product:', id);
         const response = await axios.get(`http://localhost:5000/products/${id}`);
-        console.log('Product fetched:', response.data);
         setProduct(response.data);
       } catch (error) {
-        console.error('Error fetching product:', error);
         setError('Error fetching product');
       }
     };
@@ -29,6 +27,15 @@ const ProductDetail = () => {
 
   const handleAddToCart = () => {
     addToCart(product, quantity);
+  };
+
+  const getRecommendations = async () => {
+    try {
+      const response = await axios.post('http://localhost:5000/products/recommend', { product });
+      setRecommendations(response.data);
+    } catch (error) {
+      setError('Error getting recommendations');
+    }
   };
 
   if (!product) return <div>Loading...</div>;
@@ -49,6 +56,20 @@ const ProductDetail = () => {
       <button onClick={handleAddToCart} className="btn btn-primary">
         Add to Cart
       </button>
+      <button onClick={getRecommendations} className="btn btn-secondary">
+        Get Recommendations
+      </button>
+      {recommendations.length > 0 && (
+        <div>
+          <h3>Recommended Products</h3>
+          <ul>
+            {recommendations.map((rec, index) => (
+              <li key={index}>{rec.name} - ${rec.price}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+      {error && <p className="text-danger">{error}</p>}
     </div>
   );
 };
