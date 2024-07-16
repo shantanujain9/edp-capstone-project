@@ -12,7 +12,6 @@ import Terms from './components/Terms';
 import Footer from './components/Footer';
 import Login from './components/Login';
 import Signup from './components/Signup';
-import UserProfile from './components/UserProfile';  // Import UserProfile
 import { AuthContext } from './contexts/AuthContext';
 
 function App() {
@@ -58,15 +57,10 @@ function App() {
                   </li>
                 </>
               ) : (
-                <>
-                  <li className="nav-item">
-                    <span className="navbar-text">Logged in as {user ? user.name : ''}</span>
-                    <button className="btn btn-link nav-link" onClick={logout}>Logout</button>
-                  </li>
-                  <li className="nav-item">
-                    <Link className="nav-link" to="/profile">Profile</Link>
-                  </li>
-                </>
+                <li className="nav-item">
+                  <span className="navbar-text">Logged in as {user ? user.name : ''}</span>
+                  <button className="btn btn-link nav-link" onClick={logout}>Logout</button>
+                </li>
               )}
             </ul>
           </div>
@@ -84,7 +78,6 @@ function App() {
         <Route path="/terms" element={<Terms />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/profile" element={<UserProfile />} />  {/* Add UserProfile route */}
       </Routes>
       <Footer />
     </div>
