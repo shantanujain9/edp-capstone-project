@@ -31,6 +31,20 @@ product_descriptions = {
     'Fashion Umbrellas': ['Stylish floral design', 'Transparent for a unique look', 'Fun patterns', 'Elegant lace design', 'Bright and colorful']
 }
 
+
+umberella_images = [
+"https://images.thdstatic.com/productImages/b2320990-51c6-4413-b2ee-24990492497a/svn/best-choice-products-market-umbrellas-sky6696-64_1000.jpg",
+"https://m.media-amazon.com/images/I/61xHuVq408L.jpg",
+"https://m.media-amazon.com/images/I/61RWvE1VptL.jpg",
+"https://images.thdstatic.com/productImages/9e3a621d-cbe2-438b-ae84-17a1dd6a0108/svn/best-choice-products-market-umbrellas-sky6698-64_1000.jpg",
+"https://images.thdstatic.com/productImages/cb99f57c-b8b6-4d81-9905-2500ea128399/svn/best-choice-products-market-umbrellas-sky4491-64_1000.jpg",
+"https://bluntumbrellas.com/cdn/shop/files/ProductCard_Template_Coupe_0002_Coupe_side_yellow.png?v=1689228181&width=1200",
+"https://zpacks.com/cdn/shop/products/lotus-umbrella-4_2048x.jpg?v=1579618409",
+"https://www.toynk.com/cdn/shop/products/DHC-15-282-CA_3c73b227-3a04-45a9-95d8-d24d7af065c6.jpg?v=1647662101",
+"https://businessandpleasureco.com/cdn/shop/products/Business-And-Pleasure-Co-Premium-Umbrella-Antique-White-Gallery-Web-Res.jpg?v=1702599969&width=2048"
+]
+
+
 # Generate and insert 1000 dummy products
 for _ in range(1000):
     category = random.choice(categories)
@@ -39,7 +53,7 @@ for _ in range(1000):
         'category': category,
         'price': round(random.uniform(10.0, 100.0), 2),
         'description': random.choice(product_descriptions[category]),
-        'image': fake.image_url(),
+        'image': random.choice(umberella_images),
         'popularity': random.randint(0, 100),
         'durability': random.randint(0, 100),
     }
