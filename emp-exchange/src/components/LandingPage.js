@@ -71,7 +71,7 @@ const LandingPage = () => {
   return (
     <div className="container-fluid">
       <nav className="navbar">
-        <Link className="navbar-brand" to="/">EmpExchange</Link>
+        <Link className="navbar-brand" to="/"> The Umbrella Store</Link>
         <div className="search-box">
           <input
             type="text"

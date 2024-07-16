@@ -12,6 +12,12 @@
     margin-top: 50px;
 }
 
+/* Ensure all child elements have the correct background and text color */
+.footer * {
+    background-color: inherit;
+    color: inherit;
+}
+
 .footer a {
     color: #fff;
     /* White text for links */

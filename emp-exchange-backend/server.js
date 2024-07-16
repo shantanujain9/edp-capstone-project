@@ -19,6 +19,12 @@ db.once('open', () => {
   console.log('Connected to MongoDB');
 });
 
+// Import routes
+const authRoutes = require('./routes/auth');
+
+// Use routes
+app.use('/api/auth', authRoutes);
+
 const productRoutes = require('./routes/products');
 app.use('/products', productRoutes);
 
